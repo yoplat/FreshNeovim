@@ -13,14 +13,14 @@ M.base46 = {
     CursorLine = {
       bg = "#222131",
     },
-    PmenuSbar = {
-      bg = "NONE",
-      fg = "NONE",
-    },
-    PmenuThumb = {
-      fg = "NONE",
-      bg = "NONE",
-    },
+    -- PmenuSbar = {
+    --   bg = "NONE",
+    --   fg = "NONE",
+    -- },
+    -- PmenuThumb = {
+    --   fg = "NONE",
+    --   bg = "NONE",
+    -- },
     FoldColumn = {
       bg = "NONE",
     },

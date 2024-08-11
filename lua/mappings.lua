@@ -4,7 +4,6 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map("v", ";", ":", { desc = "enter command mode", nowait = true })
 map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "quit neovim" })
 map("n", "<leader>qw", "<cmd> q <cr>", { desc = "quit window" })
-
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
 -- Moving between windows
@@ -13,10 +12,8 @@ map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
 map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
+-- Save file
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "file save" })
-
--- global lsp mappings
--- map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "lsp diagnostic loclist" })
 
 map("n", "<leader>x", function()
   require("nvchad.tabufline").close_buffer()
@@ -28,6 +25,9 @@ map("n", "H", function()
   require("nvchad.tabufline").prev()
 end, { desc = "buffer prev" })
 
+-- Lazy
+map("n", "<leader>l", "<cmd> Lazy <CR>", { desc = "Lazy" })
+
 -- nvimtree
 map(
   "n",
@@ -37,42 +37,27 @@ map(
 )
 
 -- telescope
-map(
-  "n",
-  "<leader><leader>",
-  "<cmd>Telescope find_files<CR>",
-  { desc = "telescope find files" }
-)
-map(
-  "n",
-  "<leader>fw",
-  "<cmd>Telescope live_grep<CR>",
-  { desc = "telescope live grep" }
-)
-map(
-  "n",
-  "<leader>fk",
-  "<cmd>Telescope keymaps<CR>",
-  { desc = "telescope keymaps" }
-)
-map(
-  "n",
-  "<leader>ft",
-  "<cmd>Telescope themes<CR>",
-  { desc = "telescope nvchad themes" }
-)
-map(
-  "n",
-  "<leader>fr",
-  "<cmd>Telescope oldfiles<CR>",
-  { desc = "telescope find recent" }
-)
+-- stylua: ignore start
+map("n", "<leader><leader>", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
+map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
+map("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "telescope keymaps" })
+map("n", "<leader>ft", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
+map("n", "<leader>fr", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find recent" })
+map("n", "<leader>fh", "<cmd>Telescope highlights<CR>", { desc = "telescope find highlights" })
 -- map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 -- map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 -- map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 -- map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 -- map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 -- map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+
+-- trouble
+map("n", "gr", "<cmd> Trouble lsp_references <cr>", { desc = "Goto References" })
+map("n", "ge", "<cmd> Trouble diagnostics_buffer <cr>", { desc = "File Diagnostics" })
+map("n", "gE", "<cmd> Trouble diagnostics <cr>", { desc = "Project Diagnostics" })
+map("n", "gt", "<cmd> TodoTrouble <cr>", { desc = "Todo Trouble" })
+map("n", "gd", "<cmd> Trouble lsp_definitions <cr>", { desc = "LSP Definition" })
+-- stylua: ignore end
 
 -- terminal
 -- ["<C-l>"] = { "<C-\\><C-N><C-w>l", "Window Right" }, -- Not enabled to clear the screen
@@ -123,3 +108,11 @@ end, { desc = "blankline jump to current context" })
 
 -- git
 map("n", "<leader>gg", "<cmd> Neogit <cr>", { desc = "Neogit" })
+
+-- restore session
+map(
+  "n",
+  "<leader>qr",
+  [[<cmd>lua require("persistence").load()<cr>]],
+  { desc = "Load Session" }
+)

@@ -1,29 +1,7 @@
 return {
   "nvim-lua/plenary.nvim",
 
-  {
-    "NvChad/base46",
-    build = function()
-      require("base46").load_all_highlights()
-    end,
-  },
-
-  {
-    "NvChad/ui",
-    lazy = false,
-    build = function()
-      dofile(vim.fn.stdpath "data" .. "/lazy/ui/lua/nvchad_feedback.lua")()
-    end,
-  },
-
-  {
-    "nvim-tree/nvim-web-devicons",
-    opts = function()
-      dofile(vim.g.base46_cache .. "devicons")
-      return { override = require "nvchad.icons.devicons" }
-    end,
-  },
-
+  -- Show indent
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "User FilePost",
@@ -45,15 +23,7 @@ return {
     end,
   },
 
-  -- file managing , picker etc
-  {
-    "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    opts = function()
-      return require "configs.nvimtree"
-    end,
-  },
-
+  -- Which key again??
   {
     "folke/which-key.nvim",
     keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
@@ -64,94 +34,13 @@ return {
     end,
   },
 
-  -- formatting!
-  {
-    "stevearc/conform.nvim",
-    event = "BufWritePre",
-    opts = require "configs.conform",
-  },
-
-  -- git stuff
-  {
-    "lewis6991/gitsigns.nvim",
-    event = "User FilePost",
-    opts = function()
-      return require "nvchad.configs.gitsigns"
-    end,
-  },
-
-  -- lsp stuff
-  {
-    "williamboman/mason.nvim",
-    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
-    opts = function()
-      return require "nvchad.configs.mason"
-    end,
-  },
-
-  {
-    "neovim/nvim-lspconfig",
-    event = "User FilePost",
-    config = function()
-      require("nvchad.configs.lspconfig").defaults()
-    end,
-  },
-
-  -- load luasnips + cmp related in insert mode only
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = {
-      {
-        -- snippet plugin
-        "L3MON4D3/LuaSnip",
-        dependencies = "rafamadriz/friendly-snippets",
-        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-        config = function(_, opts)
-          require("luasnip").config.set_config(opts)
-          require "nvchad.configs.luasnip"
-        end,
-      },
-
-      -- autopairing of (){}[] etc
-      {
-        "windwp/nvim-autopairs",
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { "TelescopePrompt", "vim" },
-        },
-        config = function(_, opts)
-          require("nvim-autopairs").setup(opts)
-
-          -- setup cmp for autopairs
-          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-          require("cmp").event:on(
-            "confirm_done",
-            cmp_autopairs.on_confirm_done()
-          )
-        end,
-      },
-
-      -- cmp sources plugins
-      {
-        "saadparwaiz1/cmp_luasnip",
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-      },
-    },
-    opts = function()
-      return require "nvchad.configs.cmp"
-    end,
-  },
-
+  -- Fuzzy finder
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
     opts = function()
-      return require "nvchad.configs.telescope"
+      return require "configs.telescope"
     end,
     config = function(_, opts)
       local telescope = require "telescope"
@@ -196,73 +85,41 @@ return {
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
-  -- These are some examples, uncomment them if you want to see them work!
+
+  -- Rainbow parenthesis
   {
-    "neovim/nvim-lspconfig",
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "BufReadPre",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      require "configs.lspconfig"
+      dofile(vim.g.base46_cache .. "rainbowdelimiters")
     end,
   },
 
-  -- Dressing: better input and select
+  -- Don't go over the 80 char
   {
-    "stevearc/dressing.nvim", -- TODO: check if needs to be loaded earlier
-    opts = function()
-      return require("configs.noice").dressing
-    end,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load { plugins = { "dressing.nvim" } }
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load { plugins = { "dressing.nvim" } }
-        return vim.ui.input(...)
-      end
-    end,
+    "Bekaboo/deadcolumn.nvim",
+    event = "BufReadPost",
+    opts = {},
   },
 
-  -- Noice: better ui
+  -- TODO comments
   {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      {
-        "rcarriga/nvim-notify",
-        config = function()
-          dofile(vim.g.base46_cache .. "notify")
-          require("notify").setup(require("configs.noice").notify)
-        end,
-      },
-    },
-    opts = function()
-      return require("configs.noice").noice
+    "folke/todo-comments.nvim",
+    event = { "BufReadPre" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      dofile(vim.g.base46_cache .. "todo")
+      require("todo-comments").setup(require "configs.todo")
     end,
   },
 
-  -- Neogit and diffview
+  -- Session manager
   {
-    "NeogitOrg/neogit",
-    cmd = "Neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "sindrets/diffview.nvim",
-    },
-    opts = {
-      kind = "replace",
-    },
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    config = true,
   },
-
-  -- {
-  --   "stevearc/conform.nvim",
-  --   -- event = 'BufWritePre', -- uncomment for format on save
-  --   opts = require "configs.conform",
-  -- },
-
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {
