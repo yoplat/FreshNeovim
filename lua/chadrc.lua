@@ -26,7 +26,6 @@ M.base46 = {
     },
   },
 
-
   integrations = {
     "navic",
     "rainbowdelimiters",
@@ -47,37 +46,53 @@ M.ui = {
   telescope = { style = "borderless" }, -- borderless / bordered
 
   statusline = {
-    theme = "vscode_colored", -- default/vscode/vscode_colored/minimal
-    -- default/round/block/arrow separators work only for default statusline theme
-    -- round and block will work for minimal theme only
-    separator_style = "default",
-    order = nil,
-    modules = nil,
+    theme = "vscode_colored",
+    order = { "mode", "file", "git", "diagnostics", "%=", "lsp_msg", "%=", "line", "filetype", "lsp_server", "cwd" },
+    modules = {
+      line = (function()
+        return vim.o.columns > 140 and "%#StText# %l, %c  " or ""
+      end),
+      filetype = (function()
+        local ft = vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)].ft
+        return ft == "" and "%#St_ft#{} text  " or "%#St_ft#{} " .. ft .. " "
+      end),
+      lsp_server = (function() -- LSP servers
+        local lsp_status = ""
+        for _, client in ipairs(vim.lsp.get_clients()) do
+          if client.attached_buffers[vim.api.nvim_get_current_buf()] then
+            lsp_status = lsp_status .. client.name .. " "
+          end
+        end
+        return #lsp_status > 0
+          and ((vim.o.columns > 100 and "%#St_Lsp# 󰄭  [" .. lsp_status:sub(0, #lsp_status - 1) .. "] ") or "%#St_LspStatus# 󰄭  LSP  ")
+          or ""
+      end)
+    },
   },
 
   -- lazyload it when there are 1+ buffers
   tabufline = {
     enabled = true,
     lazyload = true,
-    order = { "treeOffset", "buffers", "tabs" },
-    modules = nil,
-  },
-
-  term = {
-    winopts = { number = false, relativenumber = false },
-    sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
-    float = {
-      relative = "editor",
-      row = 0.3,
-      col = 0.25,
-      width = 0.5,
-      height = 0.4,
-      border = "single",
-    },
-  },
-
-  -- lsp = { signature = true },
-
-  -- mason = { cmd = true, pkgs = {} },
+    order = { "treeOffset", "buffers" },
+  }
 }
+
+M.term = {
+  winopts = { number = false, relativenumber = false },
+  sizes = { sp = 0.4, vsp = 0.4, ["bo sp"] = 0.4, ["bo vsp"] = 0.4 },
+  float = {
+    relative = "editor",
+    row = 0.3,
+    col = 0.25,
+    width = 0.5,
+    height = 0.4,
+    border = "single",
+  },
+}
+
+M.lsp = { signature = false }
+
+M.mason = { cmd = false, pkgs = {} }
+
 return M

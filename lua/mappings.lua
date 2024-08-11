@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 
--- map("n", ";", ":", { desc = "CMD enter command mode" })
--- map("v", ";", ":", { desc = "enter command mode", nowait = true })
+map("n", ";", ":", { desc = "CMD enter command mode" })
+map("v", ";", ":", { desc = "enter command mode", nowait = true })
 map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "quit neovim"})
 map("n", "<leader>qw", "<cmd> q <cr>", { desc = "quit window" })
 
@@ -14,6 +14,7 @@ map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "file save" })
+
 
 -- global lsp mappings
 -- map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "lsp diagnostic loclist" })
@@ -87,3 +88,6 @@ map("n", "<leader>cc", function()
     end
   end
 end, { desc = "blankline jump to current context" })
+
+-- git
+map("n", "<leader>gg", "<cmd> Neogit <cr>", { desc = "Neogit" })
