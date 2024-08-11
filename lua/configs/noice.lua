@@ -61,7 +61,10 @@ M.noice = {
         padding = { 0, 1 },
       },
       win_options = {
-        winhighlight = { Normal = "Normal", FloatBorder = "NoiceCmdlinePopupBorder" },
+        winhighlight = {
+          Normal = "Normal",
+          FloatBorder = "NoiceCmdlinePopupBorder",
+        },
       },
     },
   },

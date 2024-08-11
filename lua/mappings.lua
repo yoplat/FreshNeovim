@@ -2,7 +2,7 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("v", ";", ":", { desc = "enter command mode", nowait = true })
-map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "quit neovim"})
+map("n", "<leader>qq", "<cmd>qa<CR>", { desc = "quit neovim" })
 map("n", "<leader>qw", "<cmd> q <cr>", { desc = "quit window" })
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
@@ -14,7 +14,6 @@ map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "file save" })
-
 
 -- global lsp mappings
 -- map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "lsp diagnostic loclist" })
@@ -30,14 +29,44 @@ map("n", "H", function()
 end, { desc = "buffer prev" })
 
 -- nvimtree
-map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
+map(
+  "n",
+  "<leader>e",
+  "<cmd>NvimTreeToggle<CR>",
+  { desc = "nvimtree toggle window" }
+)
 
 -- telescope
-map("n", "<leader><leader>", "<cmd>Telescope find_files<CR>", { desc = "telescope find files"})
-map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
-map("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "telescope keymaps" })
-map("n", "<leader>ft", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
-map("n", "<leader>fr", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find recent" })
+map(
+  "n",
+  "<leader><leader>",
+  "<cmd>Telescope find_files<CR>",
+  { desc = "telescope find files" }
+)
+map(
+  "n",
+  "<leader>fw",
+  "<cmd>Telescope live_grep<CR>",
+  { desc = "telescope live grep" }
+)
+map(
+  "n",
+  "<leader>fk",
+  "<cmd>Telescope keymaps<CR>",
+  { desc = "telescope keymaps" }
+)
+map(
+  "n",
+  "<leader>ft",
+  "<cmd>Telescope themes<CR>",
+  { desc = "telescope nvchad themes" }
+)
+map(
+  "n",
+  "<leader>fr",
+  "<cmd>Telescope oldfiles<CR>",
+  { desc = "telescope find recent" }
+)
 -- map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 -- map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 -- map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
@@ -83,7 +112,10 @@ map("n", "<leader>cc", function()
   if node then
     local start_row, _, end_row, _ = node:range()
     if start_row ~= end_row then
-      vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start_row + 1, 0 })
+      vim.api.nvim_win_set_cursor(
+        vim.api.nvim_get_current_win(),
+        { start_row + 1, 0 }
+      )
       vim.api.nvim_feedkeys("_", "n", true)
     end
   end

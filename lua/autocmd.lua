@@ -39,7 +39,12 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.keymap.set(
+      "n",
+      "q",
+      "<cmd>close<cr>",
+      { buffer = event.buf, silent = true }
+    )
   end,
 })
 
@@ -62,13 +67,13 @@ vim.api.nvim_create_autocmd("FileType", {
 --   end,
 -- })
 
-vim.api.nvim_create_autocmd({"TermOpen", "BufEnter"}, {
+vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
   group = augroup "insert_terminal",
   callback = function()
     if vim.opt.buftype:get() == "terminal" then
-      vim.cmd(":startinsert")
+      vim.cmd ":startinsert"
     end
-  end
+  end,
 })
 
 -- Close NvimTree if last window

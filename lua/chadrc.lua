@@ -1,4 +1,4 @@
--- This file needs to have same structure as nvconfig.lua 
+-- This file needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/ui/blob/v2.5/lua/nvconfig.lua
 
 ---@type ChadrcConfig
@@ -47,16 +47,29 @@ M.ui = {
 
   statusline = {
     theme = "vscode_colored",
-    order = { "mode", "file", "git", "diagnostics", "%=", "lsp_msg", "%=", "line", "filetype", "lsp_server", "cwd" },
+    order = {
+      "mode",
+      "file",
+      "git",
+      "diagnostics",
+      "%=",
+      "lsp_msg",
+      "%=",
+      "line",
+      "filetype",
+      "lsp_server",
+      "cwd",
+    },
     modules = {
-      line = (function()
+      line = function()
         return vim.o.columns > 140 and "%#StText# %l, %c  " or ""
-      end),
-      filetype = (function()
-        local ft = vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)].ft
+      end,
+      filetype = function()
+        local ft =
+          vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)].ft
         return ft == "" and "%#St_ft#{} text  " or "%#St_ft#{} " .. ft .. " "
-      end),
-      lsp_server = (function() -- LSP servers
+      end,
+      lsp_server = function() -- LSP servers
         local lsp_status = ""
         for _, client in ipairs(vim.lsp.get_clients()) do
           if client.attached_buffers[vim.api.nvim_get_current_buf()] then
@@ -64,9 +77,12 @@ M.ui = {
           end
         end
         return #lsp_status > 0
-          and ((vim.o.columns > 100 and "%#St_Lsp# 󰄭  [" .. lsp_status:sub(0, #lsp_status - 1) .. "] ") or "%#St_LspStatus# 󰄭  LSP  ")
+            and ((vim.o.columns > 100 and "%#St_Lsp# 󰄭  [" .. lsp_status:sub(
+              0,
+              #lsp_status - 1
+            ) .. "] ") or "%#St_LspStatus# 󰄭  LSP  ")
           or ""
-      end)
+      end,
     },
   },
 
@@ -75,7 +91,7 @@ M.ui = {
     enabled = true,
     lazyload = true,
     order = { "treeOffset", "buffers" },
-  }
+  },
 }
 
 M.term = {
