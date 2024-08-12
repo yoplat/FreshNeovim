@@ -44,6 +44,7 @@ map("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "telescope keymaps
 map("n", "<leader>ft", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 map("n", "<leader>fr", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find recent" })
 map("n", "<leader>fh", "<cmd>Telescope highlights<CR>", { desc = "telescope find highlights" })
+map("n", "<leader>fp", "<cmd>Telescope zoxide list<CR>", { desc = "telescope find project" })
 -- map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 -- map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 -- map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
@@ -116,3 +117,15 @@ map(
   [[<cmd>lua require("persistence").load()<cr>]],
   { desc = "Load Session" }
 )
+
+-- ufo: folds
+-- stylua: ignore start
+map("n", "zr", function() require("ufo").openAllFolds() end, { desc = "Open All Folds" })
+map("n", "zm", function() require("ufo").closeAllFolds() end, { desc = "Close All Folds" })
+map("n", "K", function()
+  local winid = require("ufo").peekFoldedLinesUnderCursor()
+  if not winid then
+    vim.lsp.buf.hover()
+  end
+end, { desc = "Peek Fold" })
+-- stylua: ignore end

@@ -105,6 +105,14 @@ return {
     },
     opts = require("configs.fold").ufo,
   },
+
+  -- SimpleDash: fast dashboard
+  -- {
+  --   dir = "~/SourcesGithub/SimpleDash",
+  --   event = "VimEnter",
+  --   opts = require "configs.simpledash",
+  -- },
+
   -- Statuscol: better statuscolumn
   -- {
   --   "luukvbaal/statuscol.nvim",

@@ -1,4 +1,11 @@
 return {
+  -- TODO: checkout flatten.nvim
+  -- TODO: checkout spectre.nvim
+  -- TODO: checkout guess-indent.nvim
+  -- TODO: checkout undo-tree.nvim
+  -- TODO: checkout flash.nvim
+  -- TODO: checkout neorg.nvim
+
   "nvim-lua/plenary.nvim",
 
   -- Show indent
@@ -119,6 +126,24 @@ return {
     "folke/persistence.nvim",
     event = "BufReadPre",
     config = true,
+  },
+
+  -- Zoxide: quickly switch between directories
+  {
+    "jvgrootveld/telescope-zoxide",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = true,
+  },
+
+  -- Highlight current word and references
+  {
+    "RRethy/vim-illuminate",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = "nvim-treesitter",
+    config = function()
+      local opts = require "configs.illuminate"
+      require("illuminate").configure(opts)
+    end,
   },
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",

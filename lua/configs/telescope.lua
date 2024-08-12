@@ -23,7 +23,7 @@ local options = {
     },
   },
 
-  extensions_list = { "themes", "terms" },
+  extensions_list = { "zoxide", "themes", "terms" },
   extensions = {},
 }
 
