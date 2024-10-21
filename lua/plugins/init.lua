@@ -1,10 +1,11 @@
 return {
   -- TODO: checkout flatten.nvim
-  -- TODO: checkout spectre.nvim
+  -- TODO: checkout spectre.nvim / grug-far.nvim
   -- TODO: checkout guess-indent.nvim
   -- TODO: checkout undo-tree.nvim
   -- TODO: checkout flash.nvim
   -- TODO: checkout neorg.nvim
+  -- TODO: checkout help.nvim
 
   "nvim-lua/plenary.nvim",
 
@@ -86,7 +87,7 @@ return {
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
-      return require "nvchad.configs.treesitter"
+      return require "configs.treesitter"
     end,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)

@@ -1,6 +1,6 @@
 -- concatenates the data folder (.local/share/nvim/) with /nvchad/base46/
 -- Simply saves the location of the base46 data
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/nvchad/base46/"
+vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
@@ -26,13 +26,6 @@ local lazy_config = require "configs.lazy"
 
 -- load plugins
 require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    -- import = "nvchad.plugins",
-  },
-
   { import = "plugins" },
 }, lazy_config)
 
@@ -41,7 +34,6 @@ dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
-require "nvchad.autocmds"
 require "autocmd"
 
 vim.schedule(function()

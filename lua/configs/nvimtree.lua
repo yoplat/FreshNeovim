@@ -35,6 +35,9 @@ local options = {
       },
     },
   },
+  git = {
+    enable = false,
+  },
   actions = {
     change_dir = {
       enable = true,

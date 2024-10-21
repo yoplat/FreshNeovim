@@ -38,9 +38,12 @@ M.base46 = {
 
 M.ui = {
   cmp = {
-    icons = true,
+    -- icons = true,
     lspkind_text = true,
     style = "default", -- default/flat_light/flat_dark/atom/atom_colored
+    format_colors = {
+      tailwind = false,
+    },
   },
 
   telescope = { style = "borderless" }, -- borderless / bordered
@@ -94,8 +97,33 @@ M.ui = {
   },
 }
 
+M.nvdash = {
+  load_on_startup = false,
+
+  header = {
+    "                            ",
+    "     ▄▄         ▄ ▄▄▄▄▄▄▄   ",
+    "   ▄▀███▄     ▄██ █████▀    ",
+    "   ██▄▀███▄   ███           ",
+    "   ███  ▀███▄ ███           ",
+    "   ███    ▀██ ███           ",
+    "   ███      ▀ ███           ",
+    "   ▀██ █████▄▀█▀▄██████▄    ",
+    "     ▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀   ",
+    "                            ",
+    "     Powered By  eovim    ",
+    "                            ",
+  },
+
+  buttons = {
+    { txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
+    { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
+    -- more... check nvconfig.lua file for full list of buttons
+  },
+}
+
 M.term = {
-  winopts = { number = false, relativenumber = false },
+  winopts = { number = false },
   sizes = { sp = 0.4, vsp = 0.4, ["bo sp"] = 0.4, ["bo vsp"] = 0.4 },
   float = {
     relative = "editor",
@@ -108,7 +136,5 @@ M.term = {
 }
 
 M.lsp = { signature = false }
-
-M.mason = { cmd = false, pkgs = {} }
 
 return M

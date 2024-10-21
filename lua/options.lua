@@ -1,5 +1,3 @@
-require "nvchad.options"
-
 local opt = vim.opt
 
 vim.g.mapleader = " "
@@ -13,6 +11,7 @@ opt.conceallevel = 3 -- Hide * markup for bold and italic
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
 opt.expandtab = true -- Use spaces instead of tabs
+opt.fillchars = { eob = " " } -- Remove strange characters for empty space
 opt.foldcolumn = "0" -- Enable fold column
 opt.foldlevel = 99
 opt.foldlevelstart = 99
@@ -66,4 +65,19 @@ opt.wrap = false -- Disable line wrap
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
 
-vim.api.nvim_set_hl(0, "WinBar", { cterm = nil }) -- No dropbar bold font
+-- vim.api.nvim_set_hl(0, "WinBar", { cterm = nil }) -- No dropbar bold font
+
+-- disable some default providers
+local g = vim.g
+g.loaded_node_provider = 0
+g.loaded_python3_provider = 0
+g.loaded_perl_provider = 0
+g.loaded_ruby_provider = 0
+
+-- add binaries installed by mason.nvim to path
+local is_windows = vim.fn.has "win32" ~= 0
+local sep = is_windows and "\\" or "/"
+local delim = is_windows and ";" or ":"
+vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep)
+  .. delim
+  .. vim.env.PATH

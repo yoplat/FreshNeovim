@@ -1,20 +1,22 @@
 return {
+  -- Nvchad statusline, tabline, terminal and more...
+  {
+    "NvChad/ui",
+    config = function()
+      require "nvchad"
+    end,
+  },
+
   -- Nvchad themes!!
   {
     "NvChad/base46",
+    lazy = true,
     build = function()
       require("base46").load_all_highlights()
     end,
   },
 
-  -- Nvchad statusline, tabline, terminal and more...
-  {
-    "NvChad/ui",
-    lazy = false,
-    build = function()
-      dofile(vim.fn.stdpath "data" .. "/lazy/ui/lua/nvchad_feedback.lua")()
-    end,
-  },
+  "nvchad/volt",
 
   -- Beautiful icons
   {

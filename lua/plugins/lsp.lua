@@ -51,9 +51,6 @@ return {
         "hrsh7th/cmp-path",
       },
     },
-    opts = function()
-      return require "nvchad.configs.cmp"
-    end,
     config = function(_, opts)
       require "configs.completition"(opts)
     end,
@@ -74,6 +71,7 @@ return {
     dependencies = {
       {
         "williamboman/mason.nvim",
+        cmd = "Mason",
         config = function()
           require "configs.lsp.lspconfig"()
           require "configs.lsp.diagnostics"()
