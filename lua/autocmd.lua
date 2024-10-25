@@ -2,8 +2,10 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("defaults_" .. name, { clear = true })
 end
 
+local autocmd = vim.api.nvim_create_autocmd
+
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
   group = augroup "highlight_yank",
   callback = function()
     vim.highlight.on_yank()
@@ -11,7 +13,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+autocmd({ "VimResized" }, {
   group = augroup "resize_splits",
   callback = function()
     vim.cmd "tabdo wincmd ="
@@ -19,7 +21,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 -- close some filetypes with <q>
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
   group = augroup "close_filetype_with_q",
   pattern = {
     "PlenaryTestPopup",
@@ -49,7 +51,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
   group = augroup "wrap_spell",
   pattern = { "gitcommit", "markdown" },
   callback = function()
@@ -67,7 +69,7 @@ vim.api.nvim_create_autocmd("FileType", {
 --   end,
 -- })
 
-vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
+autocmd({ "TermOpen", "BufEnter" }, {
   group = augroup "insert_terminal",
   callback = function()
     if vim.opt.buftype:get() == "terminal" then
@@ -77,7 +79,7 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
 })
 
 -- Close NvimTree if last window
-vim.api.nvim_create_autocmd("QuitPre", {
+autocmd("QuitPre", {
   callback = function()
     local invalid_win = {}
     local wins = vim.api.nvim_list_wins()
@@ -96,14 +98,43 @@ vim.api.nvim_create_autocmd("QuitPre", {
   end,
 })
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = augroup "restore_cursor",
-  pattern = { "*" },
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--   group = augroup "restore_cursor",
+--   pattern = { "*" },
+--   callback = function()
+--     local mark = vim.api.nvim_buf_get_mark(0, '"')
+--     local lcount = vim.api.nvim_buf_line_count(0)
+--     if mark[1] > 0 and mark[1] <= lcount then
+--       pcall(vim.api.nvim_win_set_cursor, 0, mark)
+--     end
+--   end,
+-- })
+
+-- user event that loads after UIEnter + only if file buf is there
+autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
+  group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),
+  callback = function(args)
+    local file = vim.api.nvim_buf_get_name(args.buf)
+    local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
+
+    if not vim.g.ui_entered and args.event == "UIEnter" then
+      vim.g.ui_entered = true
+    end
+
+    if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
+      vim.api.nvim_exec_autocmds(
+        "User",
+        { pattern = "FilePost", modeline = false }
+      )
+      vim.api.nvim_del_augroup_by_name "NvFilePost"
+
+      vim.schedule(function()
+        vim.api.nvim_exec_autocmds("FileType", {})
+
+        if vim.g.editorconfig then
+          require("editorconfig").config(args.buf)
+        end
+      end)
     end
   end,
 })

@@ -25,6 +25,17 @@ map("n", "H", function()
   require("nvchad.tabufline").prev()
 end, { desc = "buffer prev" })
 
+-- Persistence
+map("n", "<leader>qr", function()
+  require("persistence").load()
+end, { desc = "Restore Dir Session" })
+map("n", "<leader>qs", function()
+  require("persistence").select()
+end, { desc = "Select Restore" })
+map("n", "<leader>ql", function()
+  require("persistence").load { last = true }
+end, { desc = "Restore Last Session" })
+
 -- Lazy
 map("n", "<leader>l", "<cmd> Lazy <CR>", { desc = "Lazy" })
 
@@ -41,14 +52,12 @@ map(
 map("n", "<leader><leader>", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 map("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "telescope keymaps" })
--- map("n", "<leader>ft", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 map("n", "<leader>ft",function ()
   require("nvchad.themes").open()
 end, { desc = "Find themes"})
 map("n", "<leader>fr", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find recent" })
 map("n", "<leader>fh", "<cmd>Telescope highlights<CR>", { desc = "telescope find highlights" })
 map("n", "<leader>fp", "<cmd>Telescope zoxide list<CR>", { desc = "telescope find project" })
--- map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 -- map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 -- map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 -- map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
@@ -112,14 +121,6 @@ end, { desc = "blankline jump to current context" })
 
 -- git
 map("n", "<leader>gg", "<cmd> Neogit <cr>", { desc = "Neogit" })
-
--- restore session
-map(
-  "n",
-  "<leader>qr",
-  [[<cmd>lua require("persistence").load()<cr>]],
-  { desc = "Load Session" }
-)
 
 -- ufo: folds
 -- stylua: ignore start

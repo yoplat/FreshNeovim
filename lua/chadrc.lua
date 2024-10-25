@@ -98,27 +98,61 @@ M.ui = {
 }
 
 M.nvdash = {
-  load_on_startup = false,
+  load_on_startup = true,
 
   header = {
-    "                            ",
-    "     ▄▄         ▄ ▄▄▄▄▄▄▄   ",
-    "   ▄▀███▄     ▄██ █████▀    ",
-    "   ██▄▀███▄   ███           ",
-    "   ███  ▀███▄ ███           ",
-    "   ███    ▀██ ███           ",
-    "   ███      ▀ ███           ",
-    "   ▀██ █████▄▀█▀▄██████▄    ",
-    "     ▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀   ",
-    "                            ",
-    "     Powered By  eovim    ",
-    "                            ",
+    "   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ",
+    "    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ",
+    "          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ",
+    "           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ",
+    "          ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ",
+    "   ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ",
+    "  ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ",
+    " ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ",
+    " ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ",
+    "      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ",
+    "       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ",
+    "                                   ",
+    "                                   ",
   },
 
   buttons = {
-    { txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
-    { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
-    -- more... check nvconfig.lua file for full list of buttons
+    -- { txt = "  Find File", keys = "f", cmd = "Telescope find_files" },
+    -- { txt = "  Recent Files", keys = "r", cmd = "Telescope oldfiles" },
+    -- { "  Find Word", "Spc f w", "Telescope live_grep" },
+    {
+      txt = "  Config",
+      keys = "c",
+      cmd = "cd ~/.config/nvim",
+    },
+    {
+      txt = "  Restore Session",
+      keys = "r",
+      cmd = [[lua require("persistence").load()]],
+    },
+    {
+      txt = "  Search Session",
+      keys = "s",
+      cmd = [[lua require("persistence").select()]],
+    },
+
+    -- Show plugin status
+    { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+    {
+      txt = function()
+        local stats = require("lazy").stats()
+        local ms = math.floor(stats.startuptime) .. " ms"
+        return "  Loaded "
+          .. stats.loaded
+          .. "/"
+          .. stats.count
+          .. " plugins in "
+          .. ms
+      end,
+      hl = "NvDashLazy",
+      no_gap = true,
+    },
+    { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
   },
 }
 

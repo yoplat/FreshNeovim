@@ -2,6 +2,7 @@ return {
   -- Nvchad statusline, tabline, terminal and more...
   {
     "NvChad/ui",
+    lazy = false,
     config = function()
       require "nvchad"
     end,
@@ -107,21 +108,4 @@ return {
     },
     opts = require("configs.fold").ufo,
   },
-
-  -- SimpleDash: fast dashboard
-  -- {
-  --   dir = "~/SourcesGithub/SimpleDash",
-  --   event = "VimEnter",
-  --   opts = require "configs.simpledash",
-  -- },
-
-  -- Statuscol: better statuscolumn
-  -- {
-  --   "luukvbaal/statuscol.nvim",
-  --   enabled = false,
-  --   event = "BufRead",
-  --   config = function()
-  --     require "configs.statuscol"
-  --   end,
-  -- },
 }
