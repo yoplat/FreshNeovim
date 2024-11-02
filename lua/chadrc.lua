@@ -91,8 +91,8 @@ M.ui = {
 
   -- lazyload it when there are 1+ buffers
   tabufline = {
-    enabled = true,
-    lazyload = true,
+    enabled = false,
+    lazyload = false,
     order = { "treeOffset", "buffers" },
   },
 }
@@ -137,7 +137,7 @@ M.nvdash = {
     },
 
     -- Show plugin status
-    { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+    { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     {
       txt = function()
         local stats = require("lazy").stats()
@@ -149,10 +149,10 @@ M.nvdash = {
           .. " plugins in "
           .. ms
       end,
-      hl = "NvDashLazy",
+      hl = "NvDashFooter",
       no_gap = true,
     },
-    { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+    { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
   },
 }
 

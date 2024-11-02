@@ -5,6 +5,7 @@ return {
     lazy = false,
     config = function()
       require "nvchad"
+      require "configs.tabufline_fix"
     end,
   },
 

@@ -81,6 +81,7 @@ return function(_)
     "pyright",
     -- "bashls",
     "lua_ls",
+    "rust_analyzer",
   }
 
   -- List of tools to install (no servers)
@@ -165,10 +166,24 @@ return function(_)
       }
     end,
 
-    -- custom setup for a server goes after the function above
-    -- Example, override rust_analyzer
-    -- ["rust_analyzer"] = function ()
-    --   require("rust-tools").setup {}
+    -- ["rust_analyzer"] = function()
+    --   lspconfig.rust_analyzer.setup {
+    --     on_attach = M.on_attach,
+    --     capabilities = M.capabilities,
+    --     on_init = M.on_init,
+    --
+    --     settings = {
+    --       ["rust-analyzer"] = {
+    --         diagnostics = {
+    --           enable = false,
+    --         },
+    --         inlayHints = {
+    --           typeHints = false,
+    --           parameterHints = false,
+    --         },
+    --       },
+    --     },
+    --   }
     -- end,
 
     -- ["clangd"] = function()

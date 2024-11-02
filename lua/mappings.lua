@@ -15,14 +15,15 @@ map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 -- Save file
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "file save" })
 
+-- Buffer management
 map("n", "<leader>x", function()
-  require("nvchad.tabufline").close_buffer()
+  require("utils").close_buffer()
 end, { desc = "buffer close" })
 map("n", "L", function()
-  require("nvchad.tabufline").next()
+  require("utils").next_buf()
 end, { desc = "buffer next" })
 map("n", "H", function()
-  require("nvchad.tabufline").prev()
+  require("utils").prev_buf()
 end, { desc = "buffer prev" })
 
 -- Persistence

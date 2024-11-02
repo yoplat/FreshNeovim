@@ -29,9 +29,9 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
 end
 
 M.ufo = {
-  close_fold_kinds_for_ft = {
-    default = { "imports", "comment" },
-  },
+  -- close_fold_kinds_for_ft = {
+  --   default = { "imports", "comment" },
+  -- },
   provider_selector = function()
     return { "lsp", "indent" }
   end,
