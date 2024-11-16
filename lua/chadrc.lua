@@ -32,7 +32,8 @@ M.base46 = {
     "trouble",
     "notify",
     "todo",
-    "dap",
+    "neogit",
+    "diffview",
   }, -- NOTE: check what is already enabled
 }
 

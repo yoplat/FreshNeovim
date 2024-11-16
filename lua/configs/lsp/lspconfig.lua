@@ -77,7 +77,7 @@ return function(_)
     -- "html",
     -- "cssls",
     -- "tsserver",
-    -- "clangd",
+    "clangd",
     "pyright",
     -- "bashls",
     "lua_ls",
@@ -186,22 +186,21 @@ return function(_)
     --   }
     -- end,
 
-    -- ["clangd"] = function()
-    --   lspconfig.clangd.setup {
-    --     cmd = {
-    --       "clangd",
-    --       "--offset-encoding=utf-16", -- To match null-ls
-    --       --  With this, you can configure server with
-    --       --    - .clangd files
-    --       --    - global clangd/config.yaml files
-    --       --  Read the `--enable-config` option in `clangd --help` for more information
-    --       -- "--enable-config",
-    --     },
-    --     on_attach = function(client, bufnr)
-    --       on_attach(client, bufnr)
-    --     end,
-    --     capabilities = capabilities,
-    --   }
-    -- end,
+    ["clangd"] = function()
+      lspconfig.clangd.setup {
+        on_attach = M.on_attach,
+        capabilities = M.capabilities,
+        -- on_init = M.on_init,
+        cmd = {
+          "clangd",
+          "--offset-encoding=utf-16", -- To match null-ls
+          --  With this, you can configure server with
+          --    - .clangd files
+          --    - global clangd/config.yaml files
+          --  Read the `--enable-config` option in `clangd --help` for more information
+          -- "--enable-config",
+        },
+      }
+    end,
   }
 end
