@@ -70,7 +70,7 @@ M.ui = {
       end,
       filetype = function()
         local ft =
-          vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)].ft
+            vim.bo[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)].ft
         return ft == "" and "%#St_ft#{} text  " or "%#St_ft#{} " .. ft .. " "
       end,
       lsp_server = function() -- LSP servers
@@ -85,7 +85,7 @@ M.ui = {
               0,
               #lsp_status - 1
             ) .. "] ") or "%#St_LspStatus# 󰄭  LSP  ")
-          or ""
+            or ""
       end,
     },
   },
@@ -144,11 +144,11 @@ M.nvdash = {
         local stats = require("lazy").stats()
         local ms = math.floor(stats.startuptime) .. " ms"
         return "  Loaded "
-          .. stats.loaded
-          .. "/"
-          .. stats.count
-          .. " plugins in "
-          .. ms
+            .. stats.loaded
+            .. "/"
+            .. stats.count
+            .. " plugins in "
+            .. ms
       end,
       hl = "NvDashFooter",
       no_gap = true,

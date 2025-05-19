@@ -52,7 +52,7 @@ return {
       },
     },
     config = function(_, opts)
-      require "configs.completition"(opts)
+      require "configs.completition" (opts)
     end,
   },
 
@@ -63,21 +63,22 @@ return {
     opts = require "configs.conform",
   },
 
+  -- Mason
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    opts = function()
+      return require "configs.lsp.mason"
+    end,
+  },
+
   -- LSP
   {
     "neovim/nvim-lspconfig",
-    event = { "BufRead" },
-    config = function() end, -- Override to make sure load order is correct
-    dependencies = {
-      {
-        "williamboman/mason.nvim",
-        cmd = "Mason",
-        config = function()
-          require "configs.lsp.lspconfig"()
-          require "configs.lsp.diagnostics"()
-        end,
-      },
-      "williamboman/mason-lspconfig",
-    },
+    event = { "User FilePost" },
+    config = function()
+      require "configs.lsp.lspconfig" ()
+      require "configs.lsp.diagnostics" ()
+    end,
   },
 }

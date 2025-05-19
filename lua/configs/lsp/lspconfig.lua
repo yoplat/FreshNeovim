@@ -33,7 +33,7 @@ M.on_attach = function(_, bufnr)
   end, opts "List workspace folders")
 
   map("n", "<leader>cr", function()
-    require "nvchad.lsp.renamer"()
+    require "nvchad.lsp.renamer" ()
   end, opts "NvRenamer")
 
   map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
@@ -72,135 +72,63 @@ return function(_)
 
   require("nvchad.lsp").diagnostic_config()
 
-  -- List of servers to install
-  local servers = {
-    -- "html",
-    -- "cssls",
-    -- "tsserver",
-    "clangd",
-    "pyright",
-    -- "bashls",
-    "lua_ls",
-    "rust_analyzer",
-  }
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      M.on_attach(_, args.buf)
+    end,
+  })
 
-  -- List of tools to install (no servers)
-  local ensure_installed = {
-    "ruff",
-    "black",
-    "usort",
-    "stylua",
-    -- "debugpy",
-  }
-
-  require("mason").setup {
-    PATH = "skip",
-
-    ui = {
-      icons = {
-        package_pending = " ",
-        package_installed = " ",
-        package_uninstalled = " ",
+  local lua_lsp_settings = {
+    Lua = {
+      workspace = {
+        library = {
+          vim.fn.expand "$VIMRUNTIME/lua",
+          vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
+          vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+          "${3rd}/luv/library",
+        },
       },
     },
-
-    max_concurrent_installers = 10,
   }
 
-  vim.api.nvim_create_user_command("MasonInstallAll", function()
-    vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
-  end, {})
+  vim.lsp.config("*", { capabilities = M.capabilities, on_init = M.on_init })
+  vim.lsp.config("lua_ls", { settings = lua_lsp_settings })
+  vim.lsp.enable "lua_ls"
 
-  require("mason-lspconfig").setup {
-    ensure_installed = servers,
-  }
-
-  local lspconfig = require "lspconfig"
-
-  -- This will setup lsp for servers you listed above
-  -- And servers you install through mason UI
-  -- So defining servers in the list above is optional
-  require("mason-lspconfig").setup_handlers {
-    -- Default setup for all servers, unless a custom one is defined below
-    function(server_name)
-      lspconfig[server_name].setup {
-        on_attach = function(client, bufnr)
-          M.on_attach(client, bufnr)
-          -- Add your other things here
-          -- Example being format on save or something
-        end,
-        capabilities = (function()
-          M.capabilities.textDocument.foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true,
-          }
-          return M.capabilities
-        end)(),
-      }
-    end,
-
-    ["lua_ls"] = function()
-      lspconfig.lua_ls.setup {
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
-        on_init = M.on_init,
-
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-            workspace = {
-              library = {
-                vim.fn.expand "$VIMRUNTIME/lua",
-                vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
-                vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
-                vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
-                "${3rd}/luv/library",
-              },
-              maxPreload = 100000,
-              preloadFileSize = 10000,
-            },
-          },
-        },
-      }
-    end,
-
-    -- ["rust_analyzer"] = function()
-    --   lspconfig.rust_analyzer.setup {
-    --     on_attach = M.on_attach,
-    --     capabilities = M.capabilities,
-    --     on_init = M.on_init,
-    --
-    --     settings = {
-    --       ["rust-analyzer"] = {
-    --         diagnostics = {
-    --           enable = false,
-    --         },
-    --         inlayHints = {
-    --           typeHints = false,
-    --           parameterHints = false,
-    --         },
-    --       },
-    --     },
-    --   }
-    -- end,
-
-    ["clangd"] = function()
-      lspconfig.clangd.setup {
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
-        -- on_init = M.on_init,
-        cmd = {
-          "clangd",
-          "--offset-encoding=utf-16", -- To match null-ls
-          --  With this, you can configure server with
-          --    - .clangd files
-          --    - global clangd/config.yaml files
-          --  Read the `--enable-config` option in `clangd --help` for more information
-          -- "--enable-config",
-        },
-      }
-    end,
-  }
+  --     -- ["rust_analyzer"] = function()
+  --     --   lspconfig.rust_analyzer.setup {
+  --     --     on_attach = M.on_attach,
+  --     --     capabilities = M.capabilities,
+  --     --     on_init = M.on_init,
+  --     --
+  --     --     settings = {
+  --     --       ["rust-analyzer"] = {
+  --     --         diagnostics = {
+  --     --           enable = false,
+  --     --         },
+  --     --         inlayHints = {
+  --     --           typeHints = false,
+  --     --           parameterHints = false,
+  --     --         },
+  --     --       },
+  --     --     },
+  --     --   }
+  --     -- end,
+  --
+  --     ["clangd"] = function()
+  --       lspconfig.clangd.setup {
+  --         on_attach = M.on_attach,
+  --         capabilities = M.capabilities,
+  --         -- on_init = M.on_init,
+  --         cmd = {
+  --           "clangd",
+  --           "--offset-encoding=utf-16", -- To match null-ls
+  --           --  With this, you can configure server with
+  --           --    - .clangd files
+  --           --    - global clangd/config.yaml files
+  --           --  Read the `--enable-config` option in `clangd --help` for more information
+  --           -- "--enable-config",
+  --         },
+  --       }
+  --     end,
 end

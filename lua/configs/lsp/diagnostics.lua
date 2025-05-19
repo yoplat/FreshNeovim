@@ -31,15 +31,13 @@ return function()
     },
   }
 
-  -- Use inlay hints if opts.inlay_hints.enabled = true
-  local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
-  if opts.inlay_hints.enabled and inlay_hint then
+  if opts.inlay_hints.enabled then
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
         local buffer = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client and client.supports_method "textDocument/inlayHint" then
-          inlay_hint(buffer, true)
+          vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
         end
       end,
     })
