@@ -70,7 +70,7 @@ return function(_)
   dofile(vim.g.base46_cache .. "lsp")
   dofile(vim.g.base46_cache .. "mason")
 
-  require("nvchad.lsp").diagnostic_config()
+  require("configs.lsp.diagnostics")()
 
   vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)

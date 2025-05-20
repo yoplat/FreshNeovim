@@ -21,10 +21,7 @@ return {
       dofile(vim.g.base46_cache .. "blankline")
 
       local hooks = require "ibl.hooks"
-      hooks.register(
-        hooks.type.WHITESPACE,
-        hooks.builtin.hide_first_space_indent_level
-      )
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require("ibl").setup(opts)
 
       dofile(vim.g.base46_cache .. "blankline")
@@ -49,15 +46,6 @@ return {
     cmd = "Telescope",
     opts = function()
       return require "configs.telescope"
-    end,
-    config = function(_, opts)
-      local telescope = require "telescope"
-      telescope.setup(opts)
-
-      -- load extensions
-      for _, ext in ipairs(opts.extensions_list) do
-        telescope.load_extension(ext)
-      end
     end,
   },
 
@@ -146,13 +134,4 @@ return {
       require("illuminate").configure(opts)
     end,
   },
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
 }

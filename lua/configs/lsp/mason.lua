@@ -1,16 +1,17 @@
--- List of servers to install
-local servers = {
+local M = {}
+
+M.servers = {
   -- "html",
   -- "cssls",
   -- "tsserver",
   "clangd",
   "pyright",
   -- "bashls",
-  "lua_ls",
-  "rust_analyzer",
+  "lua-language-server",
+  "rust-analyzer",
 }
 
-return {
+M.opts = {
   PATH = "skip",
 
   ui = {
@@ -23,3 +24,5 @@ return {
 
   max_concurrent_installers = 10,
 }
+
+return M

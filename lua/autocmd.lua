@@ -41,12 +41,7 @@ autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set(
-      "n",
-      "q",
-      "<cmd>close<cr>",
-      { buffer = event.buf, silent = true }
-    )
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
 
@@ -111,10 +106,7 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
     end
 
     if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
-      vim.api.nvim_exec_autocmds(
-        "User",
-        { pattern = "FilePost", modeline = false }
-      )
+      vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
       vim.api.nvim_del_augroup_by_name "NvFilePost"
 
       vim.schedule(function()

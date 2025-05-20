@@ -44,7 +44,7 @@ return {
       },
       -- cmp sources plugins
       {
-        -- "saadparwaiz1/cmp_luasnip",
+        "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
@@ -68,7 +68,7 @@ return {
     "williamboman/mason.nvim",
     cmd = "Mason",
     opts = function()
-      return require "configs.lsp.mason"
+      return require "configs.lsp.mason".opts
     end,
   },
 
@@ -78,7 +78,6 @@ return {
     event = { "User FilePost" },
     config = function()
       require "configs.lsp.lspconfig" ()
-      require "configs.lsp.diagnostics" ()
     end,
   },
 }

@@ -6,6 +6,12 @@ return {
     config = function()
       require "nvchad"
       require "configs.tabufline_fix"
+      vim.schedule(function()
+        -- vim.api.nvim_del_user_command "MasonInstallAll"
+        vim.api.nvim_create_user_command("MasonInstallAll", function()
+          require("configs.lsp.mason_commands").install_all()
+        end, {})
+      end)
     end,
   },
 
@@ -96,17 +102,20 @@ return {
     end,
   },
 
-  -- Ufo: better folds
   {
-    "kevinhwang91/nvim-ufo",
+    "chrisgrieser/nvim-origami",
     event = "BufRead",
+    opts = require("configs.fold").origami,
     dependencies = {
-      "kevinhwang91/promise-async",
       {
-        "chrisgrieser/nvim-origami",
-        opts = require("configs.fold").origami,
+        "kevinhwang91/nvim-ufo",
+        dependencies = {
+          "kevinhwang91/promise-async",
+        },
+        opts = require("configs.fold").ufo,
       },
     },
-    opts = require("configs.fold").ufo,
   },
+
+  -- Ufo: better folds
 }

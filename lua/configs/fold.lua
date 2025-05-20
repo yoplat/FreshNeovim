@@ -41,7 +41,9 @@ M.ufo = {
 M.origami = {
   keepFoldsAcrossSessions = true,
   pauseFoldsOnSearch = true,
-  setupFoldKeymaps = true,
+  foldKeymaps = {
+    setup = true,
+  },
 }
 
 return M
