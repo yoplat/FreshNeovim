@@ -13,7 +13,7 @@ M.on_attach = function(_, bufnr)
   map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
   map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
   map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
-  map("n", "gr", vim.lsp.buf.references, opts "Show references")
+  -- map("n", "gr", vim.lsp.buf.references, opts "Show references")
   map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
   map(
     "n",
@@ -78,7 +78,8 @@ return function(_)
     -- "cssls",
     -- "tsserver",
     "clangd",
-    "pyright",
+    -- "pyright",
+    "basedpyright",
     -- "bashls",
     "lua_ls",
     "rust_analyzer",
@@ -190,7 +191,7 @@ return function(_)
       lspconfig.clangd.setup {
         on_attach = M.on_attach,
         capabilities = M.capabilities,
-        -- on_init = M.on_init,
+        on_init = M.on_init,
         cmd = {
           "clangd",
           "--offset-encoding=utf-16", -- To match null-ls

@@ -115,11 +115,18 @@ return function(_)
     ["<C-e>"] = cmp.mapping.abort(),
     ["<CR>"] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<Tab>"] = cmp.mapping(function(fallback)
-      local copilot = require "copilot.suggestion"
+      -- local copilot = require "copilot.suggestion"
 
-      if copilot.is_visible() then
-        copilot.accept()
-      elseif luasnip.expand_or_locally_jumpable() then
+      -- if copilot.is_visible() then
+      --   copilot.accept()
+      -- elseif luasnip.expand_or_locally_jumpable() then
+      --   luasnip.expand_or_jump()
+      -- elseif cmp.visible() then
+      --   cmp.confirm { select = true }
+      -- else
+      --   fallback()
+      -- end
+      if luasnip.expand_or_locally_jumpable() then
         luasnip.expand_or_jump()
       elseif cmp.visible() then
         cmp.confirm { select = true }

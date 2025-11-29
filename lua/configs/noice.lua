@@ -81,6 +81,12 @@ M.noice = {
       },
       opts = { skip = true },
     },
+    {
+      filter = {
+        find = "was properly",
+      },
+      opts = { skip = true },
+    },
   },
 }
 
