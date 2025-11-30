@@ -5,7 +5,6 @@ return {
     lazy = false,
     config = function()
       require "nvchad"
-      require "configs.tabufline_fix"
     end,
   },
 
@@ -17,8 +16,6 @@ return {
       require("base46").load_all_highlights()
     end,
   },
-
-  "nvchad/volt",
 
   -- Beautiful icons
   {

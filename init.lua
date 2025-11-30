@@ -33,6 +33,7 @@ dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
 require "autocmd"
+require "configs.tabufline_fix"
 
 vim.schedule(function()
   require "mappings"

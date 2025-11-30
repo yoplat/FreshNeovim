@@ -71,6 +71,9 @@ map("n", "ge", "<cmd> Trouble diagnostics_buffer <cr>", { desc = "File Diagnosti
 map("n", "gE", "<cmd> Trouble diagnostics <cr>", { desc = "Project Diagnostics" })
 map("n", "gt", "<cmd> TodoTrouble <cr>", { desc = "Todo Trouble" })
 map("n", "gd", "<cmd> Trouble lsp_definitions <cr>", { desc = "LSP Definition" })
+map("n", "gl", function()
+  vim.diagnostic.open_float { border = "rounded" }
+end, {desc = "Floating Diagnostics"})
 -- stylua: ignore end
 
 -- terminal

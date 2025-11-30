@@ -23,27 +23,7 @@ return function()
       -- Show error -> warning -> info
       severity_sort = true,
     },
-    -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
-    -- Be aware that you also will need to properly configure your LSP server to
-    -- provide the inlay hints.
-    inlay_hints = {
-      enabled = false,
-    },
   }
-
-  -- Use inlay hints if opts.inlay_hints.enabled = true
-  local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
-  if opts.inlay_hints.enabled and inlay_hint then
-    vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(args)
-        local buffer = args.buf
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client and client.supports_method "textDocument/inlayHint" then
-          inlay_hint(buffer, true)
-        end
-      end,
-    })
-  end
 
   -- Merge diagnostics opts into vim
   vim.diagnostic.config(vim.deepcopy(opts.diagnostics))

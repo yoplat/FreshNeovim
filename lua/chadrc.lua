@@ -34,6 +34,7 @@ M.base46 = {
     "todo",
     "neogit",
     "diffview",
+    "blink",
   }, -- NOTE: check what is already enabled
 }
 
