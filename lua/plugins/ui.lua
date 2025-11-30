@@ -98,15 +98,8 @@ return {
 
   -- Ufo: better folds
   {
-    "kevinhwang91/nvim-ufo",
+    "chrisgrieser/nvim-origami",
     event = "BufRead",
-    dependencies = {
-      "kevinhwang91/promise-async",
-      {
-        "chrisgrieser/nvim-origami",
-        opts = require("configs.fold").origami,
-      },
-    },
-    opts = require("configs.fold").ufo,
+    opts = require("configs.fold").origami,
   },
 }

@@ -64,21 +64,9 @@ return {
     opts = require "configs.conform",
   },
 
-  -- LSP
+  -- Only provides default config for LSP
   {
     "neovim/nvim-lspconfig",
-    event = { "BufRead" },
-    config = function() end, -- Override to make sure load order is correct
-    dependencies = {
-      {
-        "williamboman/mason.nvim",
-        cmd = "Mason",
-        config = function()
-          require "configs.lsp.lspconfig"()
-          require "configs.lsp.diagnostics"()
-        end,
-      },
-      "williamboman/mason-lspconfig",
-    },
+    event = "BufRead",
   },
 }

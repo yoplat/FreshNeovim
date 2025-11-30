@@ -1,5 +1,3 @@
--- concatenates the data folder (.local/share/nvim/) with /nvchad/base46/
--- Simply saves the location of the base46 data
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","

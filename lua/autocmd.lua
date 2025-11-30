@@ -126,3 +126,11 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
     end
   end,
 })
+
+autocmd({ "BufRead" }, {
+  callback = function()
+    require "configs.lsp.lspconfig"()
+    require "configs.lsp.diagnostics"()
+  end,
+  once = true,
+})

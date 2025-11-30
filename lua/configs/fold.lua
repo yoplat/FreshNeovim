@@ -1,47 +1,27 @@
 local M = {}
 
-local handler = function(virtText, lnum, endLnum, width, truncate)
-  local newVirtText = {}
-  local suffix = (" 󰁂 %d "):format(endLnum - lnum)
-  local sufWidth = vim.fn.strdisplaywidth(suffix)
-  local targetWidth = width - sufWidth
-  local curWidth = 0
-  for _, chunk in ipairs(virtText) do
-    local chunkText = chunk[1]
-    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-    if targetWidth > curWidth + chunkWidth then
-      table.insert(newVirtText, chunk)
-    else
-      chunkText = truncate(chunkText, targetWidth - curWidth)
-      local hlGroup = chunk[2]
-      table.insert(newVirtText, { chunkText, hlGroup })
-      chunkWidth = vim.fn.strdisplaywidth(chunkText)
-      -- str width returned from truncate() may less than 2nd argument, need padding
-      if curWidth + chunkWidth < targetWidth then
-        suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-      end
-      break
-    end
-    curWidth = curWidth + chunkWidth
-  end
-  table.insert(newVirtText, { suffix, "MoreMsg" })
-  return newVirtText
-end
-
-M.ufo = {
-  -- close_fold_kinds_for_ft = {
-  --   default = { "imports", "comment" },
-  -- },
-  provider_selector = function()
-    return { "lsp", "indent" }
-  end,
-  fold_virt_text_handler = handler,
-}
-
 M.origami = {
-  keepFoldsAcrossSessions = true,
+  useLspFoldsWithTreesitterFallback = true,
   pauseFoldsOnSearch = true,
-  setupFoldKeymaps = true,
+  foldtext = {
+    enabled = true,
+    padding = 3,
+    lineCount = {
+      template = "%d lines", -- `%d` is replaced with the number of folded lines
+      hlgroup = "Comment",
+    },
+    diagnosticsCount = true, -- uses hlgroups and icons from `vim.diagnostic.config().signs`
+    gitsignsCount = true, -- requires `gitsigns.nvim`
+    disableOnFt = { "snacks_picker_input" }, ---@type string[]
+  },
+  autoFold = {
+    enabled = true,
+    kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
+  },
+  foldKeymaps = {
+    setup = true, -- modifies `h`, `l`, and `$`
+    hOnlyOpensOnFirstColumn = false,
+  },
 }
 
 return M

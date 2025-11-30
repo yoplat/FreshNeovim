@@ -122,15 +122,3 @@ end, { desc = "blankline jump to current context" })
 
 -- git
 map("n", "<leader>gg", "<cmd> Neogit <cr>", { desc = "Neogit" })
-
--- ufo: folds
--- stylua: ignore start
-map("n", "zr", function() require("ufo").openAllFolds() end, { desc = "Open All Folds" })
-map("n", "zm", function() require("ufo").closeAllFolds() end, { desc = "Close All Folds" })
-map("n", "K", function()
-  local winid = require("ufo").peekFoldedLinesUnderCursor()
-  if not winid then
-    vim.lsp.buf.hover()
-  end
-end, { desc = "Peek Fold" })
--- stylua: ignore end
